@@ -1,14 +1,12 @@
 interface IClientRequest {
-    id: string,
+    id?: string,
     name: string,
-    cellphone: string,
+    phone: string,
     email: string,
     address: string,
-    bairro: string,
+    neighbor: string,
     city: string,
-    uf: string,
-    admin?: boolean,
-    password: string
+    state: string
 }
 
 export {IClientRequest}

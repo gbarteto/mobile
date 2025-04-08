@@ -1,13 +1,16 @@
 import { IClientRequest } from "../../Interface/IClientInterface";
+import { getCustomRepository } from "typeorm";
+import { ClientRepositories } from "../../repositories/ClientsRepositories";
 
 class DeleteClientService{
     async execute(id: string){
-        console.log(id);
-        var msg = {
-            message: "Registro excluido com sucesso"
+        const clientRepository = getCustomRepository(ClientRepositories);
+        const client = await clientRepository.findOne(id);
+        if(!client){
+            throw new Error("Client not found");
         }
-
-        return msg;
+        await clientRepository.remove(client);
+        return {message : "Client with id " + id + " was deleted"}
     }
 }
 export {DeleteClientService}; 

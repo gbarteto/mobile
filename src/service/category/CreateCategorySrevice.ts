@@ -1,4 +1,6 @@
 import { ICategoryRequest } from "../../Interface/ICategoryInterface";
+import { getCustomRepository } from "typeorm";
+import { CategoryRepositories } from "../../repositories/CategoriesRepositories";
 
 class CreateCategoryService{
     async execute({name}: ICategoryRequest){
@@ -6,10 +8,15 @@ class CreateCategoryService{
             throw new Error("Nome incorreto");
         }
 
-        var vcategory = {
-            name: name
-        };
-        return vcategory;
+        const categoryRepository = getCustomRepository(CategoryRepositories);
+        const categoryAlreadyExists = await categoryRepository.findOne({name});
+
+        if(categoryAlreadyExists){
+            throw new Error("Category already exists");
+        }
+
+        const category = categoryRepository.create({name});
+        await categoryRepository.save(category);
     }
 }
 export {CreateCategoryService};

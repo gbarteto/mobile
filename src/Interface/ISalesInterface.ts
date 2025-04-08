@@ -1,6 +1,6 @@
 interface ISalesRequest {
-    id: string,
-    date: string,
+    id?: string,
+    date: Date,
     product: string,
     client: string,
     quantity: number,

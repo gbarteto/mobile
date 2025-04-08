@@ -1,13 +1,14 @@
-import { ICategoryRequest } from "../../Interface/ICategoryInterface";
+import { getCustomRepository } from "typeorm";
+import { CategoryRepositories } from "../../repositories/CategoriesRepositories";
 
 class DeleteCategoryService{
     async execute(id: string){
-        console.log(id);
-        var msg = {
-            message: "Registro excluido com sucesso"
+        const categoryRepository = getCustomRepository(CategoryRepositories);
+        const category = await categoryRepository.findOne(id);
+        if(!category){
+            throw new Error("Category not found");
         }
-
-        return msg;
+        await categoryRepository.remove(category);
     }
 }
 export {DeleteCategoryService}; 

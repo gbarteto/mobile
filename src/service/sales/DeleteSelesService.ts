@@ -1,13 +1,15 @@
-import { ISalesRequest } from "../../Interface/ISalesInterface";
+import { SalesRepositories } from "../../repositories/SalesRepositories";
+import { getCustomRepository } from "typeorm";
 
 class DeleteSalesService{
     async execute(id: string){
-        console.log(id);
-        var msg = {
-            message: "Registro excluido com sucesso"
+        const salesRepository = getCustomRepository(SalesRepositories);
+        const sales = await salesRepository.findOne(id);
+        if(!sales){
+            throw new Error('Venda nao encontrada');
         }
-
-        return msg;
+        await salesRepository.remove(sales);
+        return {message : "Venda excluida com sucesso"}
     }
 }
 export {DeleteSalesService}; 

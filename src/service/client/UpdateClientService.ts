@@ -1,24 +1,28 @@
 import { IClientRequest } from "../../Interface/IClientInterface";
+import { getCustomRepository } from "typeorm";
+import { ClientRepositories } from "../../repositories/ClientsRepositories";
 
 class UpdateClientService{
-    async execute({id, name, cellphone, email, address, bairro, city, uf, admin = false,password }: IClientRequest){
-        if(!id && !name && !email && !cellphone && !address && !bairro && !city && !uf && !password){
-            throw new Error("Todos os campos devem ser preenchidos");
+    async execute({id, name, phone, email, address, neighbor, city, state }: IClientRequest){
+        if(!id && !name && !email){
+            throw new Error("Nome e Email devem ser preenchidos");
+        }
+        
+        const clientRepository = getCustomRepository(ClientRepositories);
+        const clientExists = await clientRepository.findOne(id);
+        if(!clientExists){
+            throw new Error("Client not found");
         }
 
-        var vclient = {
-            id: id,
-            name:name,
-            cellphone:cellphone,
-            email:email,
-            address:address,
-            bairro:bairro,
-            city:city,
-            uf:uf,
-            admin:admin,
-            password:password
-        };
-        return vclient;
+        clientExists.name = name;
+        clientExists.phone = phone;
+        clientExists.email = email;
+        clientExists.address = address;
+        clientExists.neighbor = neighbor;
+        clientExists.city = city;
+        clientExists.state = state;
+        return await clientRepository.update(id, clientExists);
+        
     }
 }
 export {UpdateClientService}; 

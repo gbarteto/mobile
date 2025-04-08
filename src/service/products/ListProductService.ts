@@ -1,20 +1,12 @@
+import { ProductRepositories } from "../../repositories/ProductsRepositories";
+import { getCustomRepository } from "typeorm";
+
 class ListProductsService {
     async execute() {
-        const products = [
-            {
-                name:"Bola",
-                category:"Esportes",
-                description:"Bola de Futebol",
-                price:"5 kwanzas"
-            },
-            {
-                name:"PS5",
-                category:"Videogame",
-                description:"Playstation 5",
-                price:"100 kwanzas"
-            }
-        ];
-        return products;
+       const productRepositories = getCustomRepository(ProductRepositories);
+
+       const products = await productRepositories.find();
+       return products;
     }
 }
 

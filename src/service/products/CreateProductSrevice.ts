@@ -1,4 +1,6 @@
 import { IProductsRequest } from "../../Interface/IProductsInterface";
+import { ProductRepositories } from "../../repositories/ProductsRepositories";
+import { getCustomRepository } from "typeorm";
 
 class CreateProductsService{
     async execute({name, category, description, price}: IProductsRequest){
@@ -10,13 +12,16 @@ class CreateProductsService{
             throw new Error("Preço deve ser maior que zero");
         }
 
-        var vproducts = {
-            name: name,
-            category: category,
-            description: description,
-            price: price
-        };
-        return vproducts;
+        const productRepository = getCustomRepository(ProductRepositories);
+        const productAlreadyExists = await productRepository.findOne({name});
+        if(productAlreadyExists){
+            throw new Error("Product already exists");
+        }
+        const product = productRepository.create({name, category, description, price});
+        await productRepository.save(product);
+        
+        return product;
+
     }
 }
 export {CreateProductsService};
