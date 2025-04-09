@@ -1,11 +1,15 @@
 import { Request, Response } from "express";
+import { DeleteCategoryService } from "../../service/category/DeleteCategoryService";
 
 class DeleteCategoryController {
     async handle(request: Request, response: Response) {
         const { name } = request.body;
         const id = request.params.id;
 
-        response.json({ message: "Categoria "+ id + " excluído com sucesso" });
+        const deleteCategoryService = new DeleteCategoryService();
+        const msg = await deleteCategoryService.execute(id);
+
+        response.json(msg);
     }
 }
     export { DeleteCategoryController };

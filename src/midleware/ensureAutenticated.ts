@@ -17,11 +17,11 @@ export function ensureAuthenticated(
 
   // Validar se token está preenchido
   if (!authToken) {
-    response.status(401).end();
     console.log("Auth token not found");
-  }else{
-    //const [, token] = authToken.split(" ");
-    const token = authToken;
+    response.status(401).end();
+  }
+    const [, token] = authToken.split(" ");
+    console.log("token:", token);
   
     try {
       // Validar se token é válido
@@ -33,13 +33,13 @@ export function ensureAuthenticated(
       console.log("email:", email);
       console.log("sub:", sub);
   
-      //return 
+      //Vai para o proximo middleware
       next();
     } catch (err) {
       console.log("Error:", err);
       response.status(401).end();
     }
 
-  }
+  
 
 }

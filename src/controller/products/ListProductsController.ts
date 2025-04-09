@@ -1,21 +1,10 @@
 import {Request, Response} from "express";
+import { ListProductsService } from "../../service/products/ListProductService";
 
 class ListProductController{
     async handle(request: Request, response: Response){
-        const products=[
-            {
-                "name":"Bola",
-                "category":"Esportes",
-                "description":"Bola de Futebol",
-                "price":"5 kwanzas"
-            },
-            {
-                "name":"PS5",
-                "category":"Videogame",
-                "description":"Playstation 5",
-                "price":"100 kwanzas"
-            }
-        ]
+        const listproductsService = new ListProductsService();
+        const products = await listproductsService.execute();
 
       response.json(products);
     };

@@ -58,10 +58,12 @@ const authClientController = new AuthClientController();
 
 
 const router = Router();
+
+router.post("/users",createUserController.handle);
+
 router.post("/auth",authClientController.handle);
 router.use(ensureAuthenticated);
 
-router.post("/users",createUserController.handle);
 router.get("/users",listUserController.handle);
 router.put("/users/:id",updateUserController.handle);
 router.delete("/users/:id",deleteUserController.handle);
