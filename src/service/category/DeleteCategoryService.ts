@@ -9,6 +9,7 @@ class DeleteCategoryService{
             throw new Error("Category not found");
         }
         await categoryRepository.remove(category);
+        return {message : "Categoria excluida com sucesso"}
     }
 }
 export {DeleteCategoryService}; 

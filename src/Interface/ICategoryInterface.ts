@@ -1,6 +1,7 @@
 interface ICategoryRequest{
     id?: string,
-    name: string
+    name: string,
+    description: string
 }
 
 export {ICategoryRequest}

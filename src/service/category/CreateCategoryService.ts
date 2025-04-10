@@ -3,8 +3,8 @@ import { getCustomRepository } from "typeorm";
 import { CategoryRepositories } from "../../repositories/CategoriesRepositories";
 
 class CreateCategoryService{
-    async execute({name}: ICategoryRequest){
-        if(!name){
+    async execute({name, description}: ICategoryRequest){
+        if(!name && !description){
             throw new Error("Nome incorreto");
         }
 
@@ -15,7 +15,7 @@ class CreateCategoryService{
             throw new Error("Category already exists");
         }
 
-        const category = categoryRepository.create({name});
+        const category = categoryRepository.create({name, description});
         await categoryRepository.save(category);
     }
 }

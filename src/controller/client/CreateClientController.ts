@@ -3,17 +3,17 @@ import { CreateClientService } from "../../service/client/CreateClientService";
 
 class CreateClientController {
     async handle(request: Request, response: Response) {
-        const { name, cellphone, email, address, bairro, city, uf} = request.body;
+        const { name, phone, email, address, neighbor, city, state} = request.body;
 
         const createClientService = new CreateClientService();
         const client = await createClientService.execute({
             name:name,
-            phone:cellphone,
+            phone:phone,
             email:email,
             address:address,
-            neighbor:bairro,
+            neighbor:neighbor,
             city:city,
-            state:uf
+            state:state
         });
 
         response.json({ message: "Registro de Cliente incluído com sucesso" });

@@ -25,6 +25,11 @@ import {ListClientController} from "./controller/client/ListClientController";
 import { UpdateClientController } from "./controller/client/UpdateClientController";
 import { DeleteClientController } from "./controller/client/DeleteClientController";
 
+import { CreateDeliveryController } from "./controller/delivery/CreateDeliveryController";
+import { ListDeliveryController } from "./controller/delivery/ListDeliveryController";
+import { UpdateDeliveryController } from "./controller/delivery/UpdateDeliveryController";
+import { DeleteDeliveryController } from "./controller/delivery/DeleteDeliveryController";
+
 import { AuthClientController } from "./controller/auth/AuthController";
 
 import {ensureAuthenticated} from "./midleware/ensureAutenticated";
@@ -53,6 +58,11 @@ const createClientController = new CreateClientController();
 const listClientController = new ListClientController();
 const updateClientController = new UpdateClientController();
 const deleteClientController = new DeleteClientController();
+
+const createDeliveryController = new CreateDeliveryController();
+const listDeliveryController = new ListDeliveryController();
+const updateDeliveryController = new UpdateDeliveryController();
+const deleteDeliveryController = new DeleteDeliveryController();
 
 const authClientController = new AuthClientController();
 
@@ -87,5 +97,10 @@ router.post("/client",createClientController.handle);
 router.get("/client",listClientController.handle);
 router.put("/client/:id",updateClientController.handle);
 router.delete("/client/:id",deleteClientController.handle);
+
+router.post("/delivery",createDeliveryController.handle);
+router.get("/delivery",listDeliveryController.handle);
+router.put("/delivery/:id",updateDeliveryController.handle);
+router.delete("/delivery/:id",deleteDeliveryController.handle);
 
 export {router};

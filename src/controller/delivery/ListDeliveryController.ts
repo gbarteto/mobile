@@ -1,11 +1,11 @@
 import {Request, Response} from 'express';
-import {CreateDeliveryService} from '../../service/delivery/CreateDeliveryService';
+import {ListDeliveryService} from '../../service/delivery/ListDeliveryService';
 
 class ListDeliveryController{
     async handle(request: Request, response: Response){
-        const listDeliveryService = new CreateDeliveryService();
+        const listDeliveryService = new ListDeliveryService();
         const delivery = await listDeliveryService.execute();
-        return response.json(delivery);
+        response.json(delivery);
     }
 }
 

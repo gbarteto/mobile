@@ -3,15 +3,18 @@ import { CreateDeliveryService } from "../../service/delivery/CreateDeliveryServ
 
 class CreateDeliveryController {
     async handle(request: Request, response: Response) {
-        const { sale, status, shippingDate, deliveryDate} = request.body;
+        const { sale, address, status, shipping_date, delivery_date} = request.body;
+
         const createDeliveryService = new CreateDeliveryService();
         const delivery = await createDeliveryService.execute({
             sale, 
+            address,
             status, 
-            shippingDate, 
-            deliveryDate
+            shipping_date, 
+            delivery_date
         });
-        return response.json(delivery);
+        
+        response.json(delivery);
     }
 }
 

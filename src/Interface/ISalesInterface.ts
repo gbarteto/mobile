@@ -1,10 +1,11 @@
 interface ISalesRequest {
     id?: string,
     date: Date,
+    description: string,
     product: string,
-    client: string,
     quantity: number,
-    total: number
+    total: number,
+    client: string
 }
 
 export { ISalesRequest }

@@ -3,8 +3,8 @@ import { SalesRepositories } from "../../repositories/SalesRepositories";
 import { getCustomRepository } from "typeorm";
 
 class UpdateSalesService{
-    async execute({id, date, product, client, quantity, total}: ISalesRequest){
-        if(!id && !date && !product && !client && !quantity && !total){
+    async execute({id, date, description, product, quantity, total, client}: ISalesRequest){
+        if(!id && !date && !description && !product && !client && !quantity && !total){
             throw new Error('Preencha todos os campos');
         }
 
@@ -22,21 +22,13 @@ class UpdateSalesService{
             throw new Error('Venda nao encontrada');
         }
 
-        if(client){
-            const clientRepository = getCustomRepository(SalesRepositories);
-            const clientExists = await clientRepository.findOne(client);
-            if(!clientExists){
-                throw new Error('Cliente nao encontrado');
-            }
-
-            salesExists
-        }
 
         salesExists.date = date;
+        salesExists.description = description;
         salesExists.product = product;
-        salesExists.client = client;
         salesExists.quantity = quantity;
         salesExists.total = total;
+        salesExists.client = client;
         return await salesRepository.update(id, salesExists);
     }
 }
